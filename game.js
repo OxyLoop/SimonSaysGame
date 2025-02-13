@@ -39,6 +39,19 @@ $(document).keypress(function (event) {
     }
 });
 
+$(".btn").click(function () {
+    if (gameStarted) {
+        var userChosenColor = $(this).attr("id");
+        userPattern.push(userChosenColor);
+
+        playSound(userChosenColor);
+        animatePress(userChosenColor);
+
+        checkAnswer(userPattern.length - 1);
+    }
+});
+
+
 // Check the user's input against the game pattern
 function checkAnswer(currentLevel) {
     if (gamePattern[currentLevel] === userPattern[currentLevel]) {
