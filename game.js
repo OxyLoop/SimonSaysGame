@@ -6,6 +6,8 @@ var userPattern = [];
 var gameStarted = false;
 var level = 0;
 
+var inputAllowed = false;
+
 // Start or restart the game with the "Enter" key
 $(document).keypress(function (event) {
     if (event.key === "Enter" && !gameStarted) {
@@ -18,7 +20,7 @@ $(document).keypress(function (event) {
 
 // Handle color input with R, B, G, Y keys during the game
 $(document).keypress(function (event) {
-    if (gameStarted) {
+    if (gameStarted && inputAllowed) {
         var keyPressed = event.key.toLowerCase();
         var keyColorMap = {
             r: "red",
@@ -40,7 +42,7 @@ $(document).keypress(function (event) {
 });
 
 $(".btn").click(function () {
-    if (gameStarted) {
+    if (gameStarted && inputAllowed) {
         var userChosenColor = $(this).attr("id");
         userPattern.push(userChosenColor);
 
@@ -56,8 +58,10 @@ $(".btn").click(function () {
 function checkAnswer(currentLevel) {
     if (gamePattern[currentLevel] === userPattern[currentLevel]) {
         if (userPattern.length === gamePattern.length) {
+            inputAllowed = false;
             setTimeout(function () {
                 newSequence();
+                inputAllowed = true;
             }, 1000);
         }
     } else {
@@ -76,6 +80,7 @@ function resetGame() {
     level = 0;
     gamePattern = [];
     userPattern = [];
+    inputAllowed = true;
 }
 
 // Create a new sequence for the user to follow
