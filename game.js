@@ -18,6 +18,16 @@ $(document).keypress(function (event) {
     }
 });
 
+//starting from h1 title
+$("h1").click(function(){
+    if (!gameStarted) {
+        $("h1").text("Level 0");
+        resetGame();
+        newSequence();
+        gameStarted = true;
+    }
+});
+
 // Handle color input with R, B, G, Y keys during the game
 $(document).keypress(function (event) {
     if (gameStarted && inputAllowed) {
@@ -70,7 +80,7 @@ function checkAnswer(currentLevel) {
         setTimeout(function () {
             $("body").removeClass("game-over");
         }, 200);
-        $("h1").text("Game Over. Press Enter to Restart!");
+        $("h1").text("Game Over. Press Enter or Title to Restart!");
         gameStarted = false;  // Game over, allow restart with Enter
     }
 }
